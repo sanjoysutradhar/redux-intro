@@ -1,53 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-const initialState = {
+const initialStateAccount = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
   isLoading: false,
 };
-
-const accountSlice = createSlice({
-  name: "account",
-  initialState,
-  reducers: {
-    deposit(state, action) {
-      state.balance += action.payload;
-      // state.isLoading = false;
-    },
-    withdraw(state, action) {
-      state.balance -= action.payload;
-    },
-    requestLoan: {
-      prepare(amount, purpose) {
-        return {
-          payload: {
-            amount,
-            purpose,
-          },
-        };
-      },
-      reducer(state, action) {
-        if (state.loan > 0) return;
-        state.loan = action.payload.amount;
-        state.loanPurpose = action.payload.purpose;
-        state.balance = state.balance + action.payload.amount;
-      },
-    },
-    payLoan(state, action) {
-      state.balance -= state.loan;
-      state.loan = 0;
-      state.loanPurpose = "";
-    },
-    // convertingCurrency(state, action) {
-    //   state.isLoading = true;
-    // },
-  },
-});
-// console.log(accountSlice);
-export const { deposit, withdraw, requestLoan, payLoan } = accountSlice.actions;
-// console.log(requestLoan(100, "kkk"));
-export default accountSlice.reducer;
-/*export default function accountReducer(state = initialStateAccount, action) {
+export default function accountReducer(state = initialStateAccount, action) {
   switch (action.type) {
     case "account/deposit":
       return {
@@ -57,6 +14,7 @@ export default accountSlice.reducer;
       };
 
     case "account/withdraw":
+      //   if (action.payload < state.balance) return;
       return { ...state, balance: state.balance - action.payload };
     case "account/requestLoan":
       if (state.loan > 0) return;
@@ -74,6 +32,18 @@ export default accountSlice.reducer;
       return state;
   }
 }
+// store.dispatch({ type: "account/deposit", payload: 500 });
+// console.log(store.getState());
+// store.dispatch({ type: "account/withdraw", payload: 300 });
+// console.log(store.getState());
+// store.dispatch({
+//   type: "account/requestLoan",
+//   payload: { amount: 1000, purpose: "Buy a car" },
+// });
+
+// console.log(store.getState());
+// store.dispatch({ type: "account/payLoan" });
+// console.log(store.getState());
 export function deposit(amount, currency) {
   if (currency === "USD") return { type: "account/deposit", payload: amount };
 
@@ -101,4 +71,12 @@ export function requestLoan(amount, purpose) {
 }
 export function payLoan() {
   return { type: "account/payLoan" };
-}*/
+}
+
+// store.dispatch(deposit(500));
+// store.dispatch(withdraw(300));
+// console.log(store.getState());
+// store.dispatch(requestLoan(1000, "Buy a car"));
+// console.log(store.getState());
+// store.dispatch(payLoan());
+// console.log(store.getState());
