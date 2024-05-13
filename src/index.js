@@ -5,7 +5,7 @@ import App from "./App";
 import store from "./store";
 import { Provider } from "react-redux";
 
-store.dispatch({ type: "account/deposit", payload: 500 });
+// store.dispatch({ type: "account/deposit", payload: 500 });
 // console.log(store.getState());
 // store.dispatch({ type: "account/withdraw", payload: 300 });
 // console.log(store.getState());
